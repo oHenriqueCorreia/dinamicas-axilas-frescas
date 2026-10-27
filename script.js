@@ -167,15 +167,50 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     /* ==========================================================================
-       DEPOIMENTOS — adicione aqui apenas prints REAIS de clientes.
-       A seção fica oculta enquanto a lista estiver vazia.
-       Ex.: { src: 'assets/images/depoimentos/depoimento-01.png', alt: 'Depoimento de cliente 1' }
+       DEPOIMENTOS — coloque apenas prints REAIS de clientes em
+       assets/images/depoimentos/ com nomes em sequência:
+       depoimento-01.png, depoimento-02.jpg, depoimento-03.webp...
+       Os arquivos são encontrados automaticamente (a busca para no primeiro
+       número que faltar). A seção fica oculta enquanto não houver prints.
        ========================================================================== */
-    const testimonialImages = [];
     const testimonialsSection = document.getElementById('depoimentos');
     const testimonialsTrack = document.getElementById('testimonials-track');
+    const testimonialExtensions = ['png', 'jpg', 'jpeg', 'webp'];
+    const maxTestimonials = 40;
 
-    if (testimonialImages.length && testimonialsTrack) {
+    const probeImage = src => new Promise(resolve => {
+        const img = new Image();
+        img.onload = () => resolve(true);
+        img.onerror = () => resolve(false);
+        img.src = src;
+    });
+
+    const findTestimonial = async number => {
+        const name = `assets/images/depoimentos/depoimento-${String(number).padStart(2, '0')}`;
+        for (const ext of testimonialExtensions) {
+            if (await probeImage(`${name}.${ext}`)) return `${name}.${ext}`;
+        }
+        return null;
+    };
+
+    const loadTestimonials = async () => {
+        const images = [];
+        for (let number = 1; number <= maxTestimonials; number += 1) {
+            const src = await findTestimonial(number);
+            if (!src) break;
+            images.push({ src, alt: `Depoimento de cliente ${number}` });
+        }
+        return images;
+    };
+
+    const renderTestimonials = testimonialImages => {
+        if (!testimonialImages.length || !testimonialsTrack) return;
+
+        // Repete os prints para preencher a faixa mesmo com poucos depoimentos
+        const minCards = 8;
+        const cards = [];
+        while (cards.length < minCards) cards.push(...testimonialImages);
+
         const fragment = document.createDocumentFragment();
 
         for (let groupIndex = 0; groupIndex < 2; groupIndex += 1) {
@@ -183,7 +218,7 @@ document.addEventListener('DOMContentLoaded', () => {
             group.className = 'testimonials-group';
             group.setAttribute('aria-hidden', groupIndex === 1 ? 'true' : 'false');
 
-            testimonialImages.forEach(item => {
+            cards.forEach(item => {
                 const card = document.createElement('button');
                 card.type = 'button';
                 card.className = 'testimonial-card';
@@ -203,7 +238,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         testimonialsTrack.replaceChildren(fragment);
         testimonialsSection.hidden = false;
-    }
+    };
+
+    if (testimonialsTrack) loadTestimonials().then(renderTestimonials);
 
     /* ==========================================================================
        NOTIFICAÇÕES
