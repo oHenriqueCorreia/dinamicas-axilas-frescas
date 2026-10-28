@@ -100,20 +100,33 @@ document.addEventListener('DOMContentLoaded', () => {
 
     /* ==========================================================================
        CARROSSEL "POR DENTRO"
-       Enquanto não houver prints reais, as páginas são desenhadas em CSS.
-       Para usar imagens, preencha "image" em cada item
-       (ex.: image: 'assets/images/internas/dinamica-01.jpg').
+       Páginas reais do material em assets/images/internas/.
+       A primeira metade da lista vai para a fileira de cima e a segunda para a
+       de baixo. Itens sem "image" são desenhados em CSS (tag, icon, title, bg).
        ========================================================================== */
+    const internas = 'assets/images/internas/';
     const previewPages = [
-        { tag: 'DINÂMICA 01', icon: '🚿', title: 'Banho em 3 tempos para o calor da gestação', bg: '#FDE4EC' },
-        { tag: 'DINÂMICA 14', icon: '🍋', title: 'Alimentos que pioram o odor (e as trocas)', bg: '#FFF1DE' },
-        { tag: 'DINÂMICA 27', icon: '👚', title: 'Como lavar blusas sem deixar cheiro preso', bg: '#EFE4FA' },
-        { tag: 'DINÂMICA 42', icon: '🤱', title: 'Frescor durante a amamentação noturna', bg: '#E0F4EC' },
-        { tag: 'DINÂMICA 66', icon: '🧴', title: 'Rotina de 2 minutos para sair de casa', bg: '#FDE4EC' },
-        { tag: 'DINÂMICA 89', icon: '💧', title: 'Hidratação e suor: o que muda no 3º trimestre', bg: '#E3EEFB' },
-        { tag: 'DINÂMICA 120', icon: '🌙', title: 'Puerpério: suor noturno sem desconforto', bg: '#EFE4FA' },
-        { tag: 'DINÂMICA 175', icon: '🌸', title: 'Kit de bolsa da mamãe cheirosa', bg: '#FFF1DE' }
+        { image: `${internas}01-manual-como-usar.webp`, title: 'Manual Introdutório: como usar este material' },
+        { image: `${internas}04-dinamica-002.webp`, title: 'Dinâmica 002: Linha de base de 24 horas' },
+        { image: `${internas}13-cartao-cheiro-ou-suor.webp`, title: 'Cartão digital: Cheiro ou suor?' },
+        { image: `${internas}07-dinamica-061.webp`, title: 'Dinâmica 061: Desodorante ou antitranspirante?' },
+        { image: `${internas}12-caderno-linha-de-base.webp`, title: 'Caderno de Acompanhamento: minha linha de base' },
+        { image: `${internas}09-dinamica-095.webp`, title: 'Dinâmica 095: Estação de amamentação fresca' },
+        { image: `${internas}15-trilha-7-dias.webp`, title: 'Trilha de 7 dias' },
+        { image: `${internas}10-dinamica-136.webp`, title: 'Dinâmica 136: Rotina de dois minutos' },
+        { image: `${internas}17-guia-de-rotulos.webp`, title: 'Guia de Leitura de Rótulos' },
+        { image: `${internas}02-mapa-do-programa.webp`, title: 'Mapa do programa: os 12 módulos' },
+        { image: `${internas}05-dinamica-004.webp`, title: 'Dinâmica 004: Compare as duas axilas' },
+        { image: `${internas}14-resumo-modulo-1.webp`, title: 'Resumo do Módulo 1' },
+        { image: `${internas}08-dinamica-076.webp`, title: 'Dinâmica 076: Teste de tecido respirável' },
+        { image: `${internas}16-rastreador-diario.webp`, title: 'Rastreador de Sintomas e Hábitos' },
+        { image: `${internas}06-dinamica-036.webp`, title: 'Dinâmica 036: Higiene localizada de emergência' },
+        { image: `${internas}03-indice-volume-1.webp`, title: 'Biblioteca Volume 1: índice' },
+        { image: `${internas}11-dinamica-140.webp`, title: 'Dinâmica 140: Troca noturna ao alcance' },
+        { image: `${internas}18-fluxograma.webp`, title: 'Fluxograma: autocuidado ou atendimento?' }
     ];
+    const half = Math.ceil(previewPages.length / 2);
+    const previewRows = [previewPages.slice(0, half), previewPages.slice(half)];
 
     const buildPageMock = (page) => {
         const mock = document.createElement('div');
@@ -141,7 +154,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     document.querySelectorAll('.marquee-track').forEach((track, rowIndex) => {
-        const ordered = rowIndex % 2 === 0 ? previewPages : [...previewPages].reverse();
+        const ordered = previewRows[rowIndex % previewRows.length];
         const fragment = document.createDocumentFragment();
 
         for (let groupIndex = 0; groupIndex < 2; groupIndex += 1) {
