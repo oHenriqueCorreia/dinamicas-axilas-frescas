@@ -90,15 +90,39 @@
                         </ul>
                     </div>
 
-                    <!-- Mockup com as capas reais do material -->
-                    <div class="hero-visual">
-                        <div class="mockup-blob" aria-hidden="true"></div>
-                        <img class="product-mockup" src="assets/images/mockup-produto.webp" width="1100" height="777"
-                            fetchpriority="high" decoding="async"
-                            alt="Material Axilas Frescas, Mamãe Tranquila: Manual Introdutório no tablet, Biblioteca de Dinâmicas volumes 1, 2 e 3, Cartões Digitais, Caderno de Acompanhamento e uma dinâmica aberta no celular">
-                        <div class="floating-chip chip-1">💧 Sem cheiro forte</div>
-                        <div class="floating-chip chip-2">🤱 Seguro p/ amamentação*</div>
-                        <div class="floating-chip chip-3">⏱️ Rotinas de 2 min</div>
+                    <!-- Coleção em leque: material principal na frente, os 4 bônus abertos atrás -->
+                    <div class="hero-visual hero-kit" aria-label="Coleção Axilas Frescas, Mamãe Tranquila: material principal e 4 bônus">
+                        <div class="kit-arch" aria-hidden="true"></div>
+                        <div class="kit-floor" aria-hidden="true"></div>
+
+                        <div class="kit-book kit-outer-left" aria-hidden="true">
+                            <img src="assets/images/thumbs/bonus-1-frente-verso.webp" alt="" width="900" height="1272" decoding="async">
+                        </div>
+                        <div class="kit-book kit-outer-right" aria-hidden="true">
+                            <img src="assets/images/thumbs/bonus-4-capa.webp" alt="" width="900" height="1272" decoding="async">
+                        </div>
+                        <div class="kit-book kit-inner-left" aria-hidden="true">
+                            <img src="assets/images/thumbs/bonus-2-capa.webp" alt="" width="900" height="1272" decoding="async">
+                        </div>
+                        <div class="kit-book kit-inner-right" aria-hidden="true">
+                            <img src="assets/images/thumbs/bonus-3-capa.webp" alt="" width="900" height="1272" decoding="async">
+                        </div>
+                        <div class="kit-book kit-main">
+                            <img src="assets/images/thumbs/manual.webp"
+                                alt="Capa do Manual Introdutório Axilas Frescas, Mamãe Tranquila"
+                                width="900" height="1272" fetchpriority="high" decoding="async">
+                            <span class="kit-glare" aria-hidden="true"></span>
+                        </div>
+
+                        <div class="kit-seal">
+                            <strong>180</strong>
+                            <span>dinâmicas práticas</span>
+                        </div>
+                        <div class="kit-ribbon">
+                            <span>Material principal</span>
+                            <i aria-hidden="true">+</i>
+                            <span><b>4 bônus</b> de presente</span>
+                        </div>
                     </div>
 
                     <div class="hero-cta-group">
@@ -311,16 +335,20 @@
                     <div class="section-header reveal">
                         <span class="section-tag">POR DENTRO</span>
                         <h2 class="section-title">Espie <em class="highlight-script">por dentro</em> do material</h2>
-                        <p class="section-subtitle">Páginas leves, ilustradas e fáceis de seguir.</p>
+                        <p class="section-subtitle">Um passeio pelas capas do material principal e dos 4 bônus que você recebe.</p>
                     </div>
                 </div>
-                <div class="carousel-container">
-                    <div class="marquee-track scroll-left" aria-label="Páginas internas do material"></div>
+                <div class="covers-marquee">
+                    <div class="carousel-container covers-row">
+                        <div class="marquee-track scroll-left" id="covers-track-top"
+                            aria-label="Capas do material principal e dos bônus"></div>
+                    </div>
+                    <div class="carousel-container covers-row">
+                        <div class="marquee-track scroll-right" id="covers-track-bottom"
+                            aria-label="Mais capas do material e dos bônus"></div>
+                    </div>
                 </div>
-                <div class="carousel-container">
-                    <div class="marquee-track scroll-right" aria-label="Páginas internas do material"></div>
-                </div>
-                <p class="carousel-hint">💗 Toque em uma página para ver em detalhes.</p>
+                <p class="carousel-hint">💗 Toque em uma capa para ver em detalhes.</p>
             </section>
 
             <!-- Bônus -->
@@ -334,9 +362,15 @@
 
                         <div class="bonus-cards-grid">
                             <div class="bonus-card reveal">
-                                <div class="bonus-cover cover-rose">
+                                <div class="bonus-cover bonus-cover-real cover-rose">
                                     <span class="bonus-img-badge">BÔNUS 01</span>
-                                    <span class="bonus-cover-icon">🧴</span>
+                                    <span class="bonus-pack-pill">5 PDFs + 12 cartões</span>
+                                    <div class="bonus-book-mock">
+                                        <span class="bonus-book-pages"></span>
+                                        <img src="assets/images/thumbs/bonus-1-capa.webp"
+                                            alt="Capa do Guia de Rótulos para Gestantes e Lactantes" loading="lazy"
+                                            width="900" height="1272">
+                                    </div>
                                 </div>
                                 <div class="bonus-card-content">
                                     <h4>Guia de Rótulos para Gestantes e Lactantes</h4>
@@ -344,9 +378,15 @@
                                 </div>
                             </div>
                             <div class="bonus-card reveal">
-                                <div class="bonus-cover cover-lilac">
+                                <div class="bonus-cover bonus-cover-real cover-lilac">
                                     <span class="bonus-img-badge">BÔNUS 02</span>
-                                    <span class="bonus-cover-icon">👗</span>
+                                    <span class="bonus-pack-pill">5 materiais</span>
+                                    <div class="bonus-book-mock">
+                                        <span class="bonus-book-pages"></span>
+                                        <img src="assets/images/thumbs/bonus-2-capa.webp"
+                                            alt="Capa do Checklist de Tecidos que Respiram" loading="lazy"
+                                            width="900" height="1272">
+                                    </div>
                                 </div>
                                 <div class="bonus-card-content">
                                     <h4>Checklist de Tecidos que Respiram</h4>
@@ -354,9 +394,15 @@
                                 </div>
                             </div>
                             <div class="bonus-card reveal">
-                                <div class="bonus-cover cover-peach">
+                                <div class="bonus-cover bonus-cover-real cover-peach">
                                     <span class="bonus-img-badge">BÔNUS 03</span>
-                                    <span class="bonus-cover-icon">🛁</span>
+                                    <span class="bonus-pack-pill">10 PDFs + 12 áudios</span>
+                                    <div class="bonus-book-mock">
+                                        <span class="bonus-book-pages"></span>
+                                        <img src="assets/images/thumbs/bonus-3-capa.webp"
+                                            alt="Capa do Ritual de Autocuidado de 5 Minutos" loading="lazy"
+                                            width="900" height="1272">
+                                    </div>
                                 </div>
                                 <div class="bonus-card-content">
                                     <h4>Ritual de Autocuidado de 5 Minutos</h4>
@@ -364,9 +410,15 @@
                                 </div>
                             </div>
                             <div class="bonus-card reveal">
-                                <div class="bonus-cover cover-mint">
+                                <div class="bonus-cover bonus-cover-real cover-mint">
                                     <span class="bonus-img-badge">BÔNUS 04</span>
-                                    <span class="bonus-cover-icon">📔</span>
+                                    <span class="bonus-pack-pill">Diário imprimível</span>
+                                    <div class="bonus-book-mock">
+                                        <span class="bonus-book-pages"></span>
+                                        <img src="assets/images/thumbs/bonus-4-capa.webp"
+                                            alt="Capa do Diário da Mamãe Cheirosa" loading="lazy"
+                                            width="900" height="1272">
+                                    </div>
                                 </div>
                                 <div class="bonus-card-content">
                                     <h4>Diário da Mamãe Cheirosa (para imprimir)</h4>

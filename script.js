@@ -100,76 +100,92 @@ document.addEventListener('DOMContentLoaded', () => {
 
     /* ==========================================================================
        CARROSSEL "POR DENTRO"
-       Páginas reais do material em assets/images/internas/.
-       A primeira metade da lista vai para a fileira de cima e a segunda para a
-       de baixo. Itens sem "image" são desenhados em CSS (tag, icon, title, bg).
+       Duas faixas infinitas de capas: a de cima corre para a esquerda e a
+       de baixo para a direita. Cada faixa mistura material principal e bônus.
        ========================================================================== */
-    const internas = 'assets/images/internas/';
-    const previewPages = [
-        { image: `${internas}01-manual-como-usar.webp`, title: 'Manual Introdutório: como usar este material' },
-        { image: `${internas}04-dinamica-002.webp`, title: 'Dinâmica 002: Linha de base de 24 horas' },
-        { image: `${internas}13-cartao-cheiro-ou-suor.webp`, title: 'Cartão digital: Cheiro ou suor?' },
-        { image: `${internas}07-dinamica-061.webp`, title: 'Dinâmica 061: Desodorante ou antitranspirante?' },
-        { image: `${internas}12-caderno-linha-de-base.webp`, title: 'Caderno de Acompanhamento: minha linha de base' },
-        { image: `${internas}09-dinamica-095.webp`, title: 'Dinâmica 095: Estação de amamentação fresca' },
-        { image: `${internas}15-trilha-7-dias.webp`, title: 'Trilha de 7 dias' },
-        { image: `${internas}10-dinamica-136.webp`, title: 'Dinâmica 136: Rotina de dois minutos' },
-        { image: `${internas}17-guia-de-rotulos.webp`, title: 'Guia de Leitura de Rótulos' },
-        { image: `${internas}02-mapa-do-programa.webp`, title: 'Mapa do programa: os 12 módulos' },
-        { image: `${internas}05-dinamica-004.webp`, title: 'Dinâmica 004: Compare as duas axilas' },
-        { image: `${internas}14-resumo-modulo-1.webp`, title: 'Resumo do Módulo 1' },
-        { image: `${internas}08-dinamica-076.webp`, title: 'Dinâmica 076: Teste de tecido respirável' },
-        { image: `${internas}16-rastreador-diario.webp`, title: 'Rastreador de Sintomas e Hábitos' },
-        { image: `${internas}06-dinamica-036.webp`, title: 'Dinâmica 036: Higiene localizada de emergência' },
-        { image: `${internas}03-indice-volume-1.webp`, title: 'Biblioteca Volume 1: índice' },
-        { image: `${internas}11-dinamica-140.webp`, title: 'Dinâmica 140: Troca noturna ao alcance' },
-        { image: `${internas}18-fluxograma.webp`, title: 'Fluxograma: autocuidado ou atendimento?' }
-    ];
-    const half = Math.ceil(previewPages.length / 2);
-    const previewRows = [previewPages.slice(0, half), previewPages.slice(half)];
+    const PRINCIPAL = { label: 'MATERIAL PRINCIPAL', tone: 'principal' };
+    const BONUS_1 = { label: 'BÔNUS 01', tone: 'bonus-1' };
+    const BONUS_2 = { label: 'BÔNUS 02', tone: 'bonus-2' };
+    const BONUS_3 = { label: 'BÔNUS 03', tone: 'bonus-3' };
+    const BONUS_4 = { label: 'BÔNUS 04', tone: 'bonus-4' };
 
-    const buildPageMock = (page) => {
-        const mock = document.createElement('div');
-        mock.className = 'page-mock';
-        mock.style.background = page.bg;
-        mock.innerHTML = `
-            <span class="page-mock-tag"></span>
-            <span class="page-mock-icon" aria-hidden="true"></span>
-            <span class="page-mock-title"></span>
-            <span class="page-mock-lines" aria-hidden="true"><i></i><i></i><i></i></span>`;
-        mock.querySelector('.page-mock-tag').textContent = page.tag;
-        mock.querySelector('.page-mock-icon').textContent = page.icon;
-        mock.querySelector('.page-mock-title').textContent = page.title;
-        return mock;
+    const coverRows = {
+        'covers-track-top': [
+            { ...PRINCIPAL, image: 'assets/images/produto-premium/manual.webp', title: 'Manual Introdutório' },
+            { ...BONUS_1, image: 'assets/images/bonus-reais/bonus-1-frente-verso.webp', title: 'A frente promete, o verso explica' },
+            { ...BONUS_2, image: 'assets/images/bonus-reais/bonus-2-capa.webp', title: 'Checklist de Tecidos que Respiram' },
+            { ...PRINCIPAL, image: 'assets/images/produto-premium/volume-1.webp', title: 'Biblioteca de Dinâmicas · Vol. 1' },
+            { ...PRINCIPAL, image: 'assets/images/capas/guia-axilas-frescas.webp', title: 'Axilas Frescas, Mamãe Tranquila' },
+            { ...BONUS_1, image: 'assets/images/bonus-reais/bonus-1-60-segundos.webp', title: 'Seu rótulo em 60 segundos' },
+            { ...PRINCIPAL, image: 'assets/images/produto-premium/volume-2.webp', title: 'Biblioteca de Dinâmicas · Vol. 2' },
+            { ...BONUS_2, image: 'assets/images/capas/tecidos-calor-seco-umido.webp', title: 'Calor seco × calor úmido' },
+            { ...BONUS_1, image: 'assets/images/bonus-reais/bonus-1-depilacao.webp', title: 'Depois da depilação' },
+            { ...PRINCIPAL, image: 'assets/images/produto-premium/volume-3.webp', title: 'Biblioteca de Dinâmicas · Vol. 3' },
+            { ...BONUS_1, image: 'assets/images/capas/rotulos-desodorante.webp', title: 'Desodorante ou antitranspirante?' },
+            { ...BONUS_2, image: 'assets/images/bonus-reais/bonus-2-peca.webp', title: 'A peça inteira importa' },
+            { ...PRINCIPAL, image: 'assets/images/produto-premium/caderno.webp', title: 'Caderno de Acompanhamento' }
+        ],
+        'covers-track-bottom': [
+            { ...BONUS_4, image: 'assets/images/bonus-reais/bonus-4-capa.webp', title: 'Diário da Mamãe Cheirosa' },
+            { ...BONUS_3, image: 'assets/images/bonus-reais/bonus-3-capa.webp', title: 'Ritual de Autocuidado de 5 Minutos' },
+            { ...BONUS_4, image: 'assets/images/bonus-reais/bonus-4-metodo.webp', title: 'Seu método em 4 passos' },
+            { ...BONUS_3, image: 'assets/images/bonus-reais/bonus-3-unidade-1.webp', title: 'Ritual de hoje: voltar para mim' },
+            { ...PRINCIPAL, image: 'assets/images/capas/resumos-12-modulos.webp', title: 'Resumos dos 12 Módulos' },
+            { ...BONUS_1, image: 'assets/images/bonus-reais/bonus-1-aluminio.webp', title: 'Alumínio sem alarmismo' },
+            { ...BONUS_4, image: 'assets/images/bonus-reais/bonus-4-cuidado.webp', title: 'Cuidado primeiro' },
+            { ...BONUS_3, image: 'assets/images/bonus-reais/bonus-3-baralho.webp', title: 'Baralho Digital · 30 rituais' },
+            { ...BONUS_1, image: 'assets/images/capas/rotulos-lactacao.webp', title: 'Lactação e contato pele a pele' },
+            { ...BONUS_2, image: 'assets/images/bonus-reais/bonus-2-modal.webp', title: 'Modal: o que saber' },
+            { ...PRINCIPAL, image: 'assets/images/capas/trilhas-7-30-60-90.webp', title: 'Trilhas de 7, 30, 60 e 90 dias' },
+            { ...BONUS_4, image: 'assets/images/bonus-reais/bonus-4-boas-vindas.webp', title: 'Bem-vinda ao seu diário' },
+            { ...BONUS_1, image: 'assets/images/bonus-reais/bonus-1-fragrancia.webp', title: 'Fragrância e pele sensível' },
+            { ...BONUS_3, image: 'assets/images/bonus-reais/bonus-3-caderno.webp', title: 'Caderno de Aplicação' },
+            { ...BONUS_1, image: 'assets/images/capas/rotulos-cinco-filtros.webp', title: 'Os 5 filtros da escolha' },
+            { ...BONUS_2, image: 'assets/images/capas/tecidos-compra-rapida.webp', title: 'Checklist de compra rápida' },
+            { ...BONUS_4, image: 'assets/images/bonus-reais/bonus-4-ritmo.webp', title: 'Escolha o seu ritmo' }
+        ]
     };
 
-    const buildPageContent = (page) => {
-        if (!page.image) return buildPageMock(page);
+    // Na faixa vai a versão leve (assets/images/thumbs/); ao ampliar, a original
+    const thumbOf = src => `assets/images/thumbs/${src.split('/').pop()}`;
+
+    const buildCoverImage = (product, src = product.image) => {
         const image = document.createElement('img');
-        image.src = page.image;
-        image.alt = page.title;
+        image.src = src;
+        image.alt = product.title;
         image.decoding = 'async';
         image.draggable = false;
         return image;
     };
 
-    document.querySelectorAll('.marquee-track').forEach((track, rowIndex) => {
-        const ordered = previewRows[rowIndex % previewRows.length];
+    const buildCoverRow = ([trackId, products]) => {
+        const track = document.getElementById(trackId);
+        if (!track) return;
+
         const fragment = document.createDocumentFragment();
 
+        // Dois grupos idênticos: quando o primeiro sai da tela o segundo já ocupa
+        // o lugar dele, então a faixa nunca fica vazia
         for (let groupIndex = 0; groupIndex < 2; groupIndex += 1) {
             const group = document.createElement('div');
             group.className = 'marquee-group';
             group.setAttribute('aria-hidden', groupIndex === 1 ? 'true' : 'false');
 
-            ordered.forEach(page => {
+            products.forEach(product => {
                 const slide = document.createElement('button');
                 slide.type = 'button';
-                slide.className = 'demo-slide';
-                slide.setAttribute('aria-label', `Ampliar: ${page.title}`);
+                slide.className = `demo-slide product-cover-slide tone-${product.tone}`;
+                slide.setAttribute('aria-label', `Ampliar capa: ${product.title}`);
                 if (groupIndex === 1) slide.tabIndex = -1;
-                slide.appendChild(buildPageContent(page));
-                slide.addEventListener('click', () => openLightbox(buildPageContent(page)));
+
+                slide.appendChild(buildCoverImage(product, thumbOf(product.image)));
+
+                const caption = document.createElement('span');
+                caption.className = 'product-cover-caption';
+                caption.innerHTML = `<small>${product.label}</small><strong>${product.title}</strong>`;
+                slide.appendChild(caption);
+
+                slide.addEventListener('click', () => openLightbox(buildCoverImage(product)));
                 group.appendChild(slide);
             });
 
@@ -177,7 +193,23 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         track.replaceChildren(fragment);
-    });
+    };
+
+    // As capas só começam a baixar quando a seção está chegando na tela,
+    // para não disputar banda com o topo da página
+    const coversSection = document.getElementById('demonstracoes');
+    const buildCoverRows = () => Object.entries(coverRows).forEach(buildCoverRow);
+
+    if (coversSection && 'IntersectionObserver' in window) {
+        const coversObserver = new IntersectionObserver(entries => {
+            if (!entries.some(entry => entry.isIntersecting)) return;
+            coversObserver.disconnect();
+            buildCoverRows();
+        }, { rootMargin: '1200px 0px' });
+        coversObserver.observe(coversSection);
+    } else {
+        buildCoverRows();
+    }
 
     /* ==========================================================================
        DEPOIMENTOS — coloque apenas prints REAIS de clientes em
